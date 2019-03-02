@@ -90,4 +90,31 @@ router.post('/movie', async(req, res) => {
     }
 });
 
+// update movie
+router.put('/movie', async(req, res) => {
+    if (!req.body) {
+        return res.status(400).send(SERVER_RESPONSES.EMPTY_REQ_BODY);
+    }
+
+    if (!req.body.id) {
+        return res.status(400).send(SERVER_RESPONSES.MISSING_ID)
+    }
+
+    try {
+        const updateResult = await MovieModel.findOneAndUpdate({
+            _id: req.body.id
+        }, req.body, {
+            new: true
+        });
+
+        if (!updateResult || updateResult.length === 0) {
+            return res.status(500).send(updateResult)
+        }
+
+        res.status(201).send(updateResult);
+    } catch (error) {
+        return res.status(500).json(error.errmsg);
+    }
+});
+
 module.exports = router;
