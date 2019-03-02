@@ -1,0 +1,55 @@
+{
+  "name": "movies-react-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:server": "nodemon server/index.js",
+    "start:client": "webpack --config ./webpack.config.js --mode development --watch",
+    "start:development": "concurrently \"npm run start:server\" \"npm run start:client\"",
+    "start": "npm run start:development",
+    "build": "webpack --config ./webpack.config.js --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lordValan/movies-react-app.git"
+  },
+  "author": " <Danil Fomin> (https://fomindanil.com/)",
+  "license": "ISC",
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/lordValan/movies-react-app/issues"
+  },
+  "homepage": "https://github.com/lordValan/movies-react-app#readme",
+  "dependencies": {
+    "dotenv-webpack": "^1.7.0",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^9.4.9",
+    "babel-loader": "^8.0.5",
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "copy-webpack-plugin": "^5.0.0",
+    "css-loader": "^2.1.0",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.16",
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.18.10",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3"
+  }
+}
