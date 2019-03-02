@@ -27,9 +27,14 @@
   },
   "homepage": "https://github.com/lordValan/movies-react-app#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "dotenv-webpack": "^1.7.0",
+    "normalize.css": "^8.0.1",
+    "prop-types": "^15.7.2",
     "react": "^16.8.3",
-    "react-dom": "^16.8.3"
+    "react-debounce-input": "^3.2.0",
+    "react-dom": "^16.8.3",
+    "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
