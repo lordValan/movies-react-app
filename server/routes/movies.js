@@ -61,4 +61,33 @@ router.get('/movies', async(req, res) => {
     }
 });
 
+// create new movie
+router.post('/movie', async(req, res) => {
+    if (!req.body) {
+        return res.status(400).send(SERVER_RESPONSES.EMPTY_REQ_BODY);
+    }
+
+    if (!req.body.name) {
+        return res.status(400).send(SERVER_RESPONSES.MISSING_MOVIE_NAME);
+    }
+
+    if (!req.body.actors || !Array.isArray(req.body.actors)) {
+        return res.status(400).send(SERVER_RESPONSES.MISSING_MOVIE_ACTORS);
+    }
+
+    const model = new MovieModel(req.body);
+
+    try {
+        const createResult = await model.save();
+
+        if (!createResult || createResult.length === 0) {
+            return res.status(500).send(doc)
+        }
+
+        res.status(201).send(createResult);
+    } catch (error) {
+        return res.status(500).json(error.errmsg);
+    }
+});
+
 module.exports = router;
