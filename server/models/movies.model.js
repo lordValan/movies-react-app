@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const constants = require('../constants');
 
-mongoose.connect(constants.DB_CONNECTION, { useNewUrlParser: true });
+mongoose.connect(constants.DB_CONNECTION, { useNewUrlParser: true, useCreateIndex: true, });
 
 let MovieSchema = new mongoose.Schema({
     name: {

@@ -14,7 +14,8 @@ const server_responses = {
     MISSING_MOVIE_NAME: 'Movie name is required!',
     MISSING_MOVIE_ACTORS: 'Movie actors list is required!',
     MISSING_ID: 'Missing URL parameter: id',
-    MISSING_FILE: 'Missing file, please, choose .txt file!'
+    MISSING_FILE: 'Missing file, please, choose .txt file!',
+    DUPLICATED_MOVIE: 'One of the movies is already in the list. Please, remove it from the file and try again.'
 }
 
 module.exports = {

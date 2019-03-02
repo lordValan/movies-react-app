@@ -107,14 +107,86 @@ router.put('/movie', async(req, res) => {
             new: true
         });
 
-        if (!updateResult || updateResult.length === 0) {
-            return res.status(500).send(updateResult)
-        }
-
         res.status(201).send(updateResult);
     } catch (error) {
         return res.status(500).json(error.errmsg);
     }
+});
+
+// remove movie
+router.delete('/movie', async(req, res) => {
+    if (!req.body) {
+        return res.status(400).send(SERVER_RESPONSES.EMPTY_REQ_BODY);
+    }
+
+    if (!req.body.id) {
+        return res.status(400).send(SERVER_RESPONSES.MISSING_ID)
+    }
+
+    try {
+        const removeResult = await MovieModel.findOneAndDelete({
+            _id: req.body.id
+        });
+
+        res.status(201).send(removeResult);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+});
+
+// create new movies from file
+router.post('/movies', async(req, res) => {
+    if(!req.files) {
+        return res.status(400).send(SERVER_RESPONSES.MISSING_FILE);
+    }
+
+    const txtFile = req.files.file;
+    const fileData = txtFile.data.toString().replace(/\r/g, '');
+
+    const arr = fileData.split('\n\n');
+    const moviesArr = [];
+
+    for(let i = 0; i < arr.length; i++) {
+        // find name of movie
+        let title = arr[i].match(/Title: (.*)/);
+
+        // if not found - start next iteration
+        if(!title || !title[1]) continue;
+
+        title = title[1];
+
+        // find and parse movie release year
+        let year = arr[i].match(/Release Year: (.*)/)[1];
+        year = parseInt(year);
+
+        // find and parse movie format
+        let format = arr[i].match(/Format: (.*)/)[1];
+        format = MOVIE_FORMATS.includes(format) ? format : null;
+
+        // find and parse movie actors
+        let actors = arr[i].match(/Stars: (.*)/)[1];
+        actors = actors.split(', ');
+        
+        moviesArr.push({
+            name: title,
+            year: year,
+            format: format,
+            actors: actors
+        });
+    }
+
+    try {
+        const result = await MovieModel
+            .insertMany(moviesArr, { ordered: false });
+
+        return res.json(result);
+    } catch (error) {
+        if(error.code === 11000) {
+            return res.status(500).json(`${SERVER_RESPONSES.DUPLICATED_MOVIE}`);
+        }
+
+        return res.status(500).json(error.errmsg);
+    }  
 });
 
 module.exports = router;
