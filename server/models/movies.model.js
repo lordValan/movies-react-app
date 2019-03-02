@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
+const constants = require('../constants');
 
-const server = '127.0.0.1:27017';
-const database = 'movies-react-app';
-
-mongoose.connect(`mongodb://${server}/${database}`)
+mongoose.connect(constants.DB_CONNECTION, { useNewUrlParser: true });
 
 let MovieSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     year: {
         type: Number,
@@ -18,7 +17,8 @@ let MovieSchema = new mongoose.Schema({
         type: String
     },
     actors: {
-        type: Array
+        type: Array,
+        required: true
     }
 })
 
