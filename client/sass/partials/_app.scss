@@ -3,3 +3,19 @@ body {
     color: $primary-color;
     background-color: $background-app-color;
 }
+
+.close-modal-button {
+    cursor: pointer;
+    padding: 0;
+    opacity: 0.5;
+    transition: opacity 0.2s ease-in-out;
+
+    &:hover {
+        opacity: 1;
+    }
+    
+    &:focus,
+    &:active {
+        outline: none;
+    }
+}

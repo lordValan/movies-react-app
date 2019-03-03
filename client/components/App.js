@@ -8,7 +8,9 @@ import axios from 'axios';
 import '../sass/styles.scss';
 // Components
 import Searcher from './Searcher';
-import MoviesTable from './MoviesTable';
+import MoviesList from './MoviesList';
+import Modal from 'react-responsive-modal';
+import MovieInfo from './MovieInfo';
 
 export default class App extends Component {
     constructor(props) {
@@ -16,10 +18,17 @@ export default class App extends Component {
 
         WebFont.load(Settings.fontsLoad);
 
+        this.currentMovie = null;
+
         this.state = {
             movies: [],
             searchString: '',
-            currentPage: 1
+            currentPage: 1,
+            modalOpen: false,
+            showInfo: false,
+            showEditor: false,
+            showCreateEditor: false,
+            showRemoveMovie: false
         }
     }
 
@@ -40,6 +49,31 @@ export default class App extends Component {
             });
     }
 
+    onOpenModal() {
+        this.setState({ modalOpen: true });
+    };
+
+    onCloseModal() {
+        this.currentMovie = null;
+
+        this.setState({ 
+            modalOpen: false,
+            showInfo: false,
+            showEditor: false,
+            showCreateEditor: false,
+            showRemoveMovie: false
+        });
+    };
+
+    onOpenModalInfo(movie) {
+        this.currentMovie = movie;
+
+        this.setState({
+            modalOpen: true,
+            showInfo: true
+        });
+    }
+
     componentDidMount() {
         axios.get('/movies')
             .then((response) => {
@@ -56,7 +90,19 @@ export default class App extends Component {
         return (
             <Fragment>
                 <Searcher onSearchHandler = { this.onSearchStringChangeHandler.bind(this) }  />
-                <MoviesTable movies = { this.state.movies } />                
+                <MoviesList movies = { this.state.movies } 
+                        onOpenModalInfo = { this.onOpenModalInfo.bind(this) } 
+                />
+                <Modal open={ this.state.modalOpen } 
+                        onClose = { this.onCloseModal.bind(this) } 
+                        center
+                        classNames = { { closeButton: 'close-modal-button' } }
+                > 
+                    { this.state.showInfo ? <MovieInfo movie = { this.currentMovie } /> : null }
+                    { this.state.showEditor ? <p>Editor</p> : null }
+                    { this.state.showCreateEditor ? <p>Create Editor</p> : null }
+                    { this.state.showRemoveMovie ? <p>Remove</p> : null }
+                </Modal>                
             </Fragment>         
         )
     }

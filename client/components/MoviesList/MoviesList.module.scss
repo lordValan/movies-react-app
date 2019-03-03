@@ -1,0 +1,158 @@
+// gradients
+
+.darkBlue {
+    background: #373B44;
+    background: linear-gradient(to right, #4286f4, #373B44);
+}
+
+.coolBlues {
+    background: #2193b0;
+    background: linear-gradient(to right, #6dd5ed, #2193b0);
+}
+
+.moonlitAsteroid {
+    background: #0F2027;
+    background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
+}
+
+.amin {
+    background: #8E2DE2;
+    background: linear-gradient(to right, #4A00E0, #8E2DE2);
+}
+
+.kyooTah {
+    background: #544a7d;
+    background: linear-gradient(to right, #ffd452, #544a7d);
+}
+
+.expresso {
+    background: #ad5389;
+    background: linear-gradient(to right, #3c1053, #ad5389);
+}
+
+.lawrencium {
+    background: #0f0c29;
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+}
+
+.hydrogen {
+    background: #667db6;
+    background: linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)
+}
+
+.meridian {
+    background: #283c86; 
+    background: linear-gradient(to right, #45a247, #283c86);
+}
+
+.purplepine {
+    background: #20002c;
+    background: linear-gradient(to right, #cbb4d4, #20002c);
+}
+
+// variables
+
+$scale-movie-time: 0.15s;
+
+// styles
+
+.moviesList {
+    max-width: 900px;
+    padding: 50px 0;
+    margin: 0 auto;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    grid-auto-rows: 1fr;
+
+    &::before {
+        content: '';
+        width: 0;
+        padding-bottom: 100%;
+        grid-row: 1 / 1;
+        grid-column: 1 / 1;
+    }
+
+    & > *:first-child {
+        grid-row: 1 / 1;
+        grid-column: 1 / 1;
+    }
+
+    .moviesItem {
+        display: flex;
+        position: relative;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 10px;
+        box-sizing: border-box;
+        color: #fff;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform $scale-movie-time ease-in-out;
+
+        &:hover,
+        &:active,
+        &:focus {
+            transform: scale(1.05);
+        }
+
+        .movieName {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .movieYear {
+            font-size: 0.9em;
+        }
+
+        .movieInstruments {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            background-color: #e0e0e0;
+            transform: translateY(-100%);
+            box-shadow: inset 0px 0px 45px -5px rgba(0,0,0,0.15);
+            transition: transform 0.15s ease-in-out $scale-movie-time;
+
+            .movieInstrumentsBt {
+                height: fit-content;
+                padding: 0;
+                cursor: pointer;
+                background-color: transparent;
+                border: none;
+                opacity: 0.5;
+                position: relative;
+                transition: opacity 0.15s ease-in-out;
+
+                &:hover {
+                    opacity: 1;
+                }
+
+                &:active,
+                &:focus {
+                    outline: none;
+                }
+
+                & > svg {
+                    height: 1.5em;
+                    width: 1.5em
+                }
+            }
+        }
+
+        &:hover {
+            .movieInstruments {
+                transform: translateY(0);
+            }
+        }
+    }
+}
+
