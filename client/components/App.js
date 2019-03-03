@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 // Instruments
 import { Settings } from '../utils';
 import WebFont from 'webfontloader';
-import axios from 'axios';
+import { getMovies, getMoviesResponseHandler, getMoviesErrorHandler } from './Methods';
 // Styles
 import '../sass/styles.scss';
 // Components
@@ -12,16 +12,7 @@ import MoviesList from './MoviesList';
 import Modal from 'react-responsive-modal';
 import MovieInfo from './MovieInfo';
 import ListInstruments from './ListInstruments';
-
-const getMovies = (s = '', sort = 'default', page = 1) => {
-    return axios.get('/movies', {
-        params: {
-            s: s,
-            sort: sort,
-            page: page
-        }
-    });
-}
+import CustomPagination from './Pagination';
 
 export default class App extends Component {
     constructor(props) {
@@ -36,6 +27,9 @@ export default class App extends Component {
         this.state = {
             movies: [],
             currentPage: 1,
+            shownMoviesAmount: -1,
+            maxNumPages: -1,
+            fullMoviesAmount: -1,
             modalOpen: false,
             showInfo: false,
             showEditor: false,
@@ -47,15 +41,12 @@ export default class App extends Component {
     onSearchStringChangeHandler(searchValue) {
         getMovies(searchValue, this.currentSort)
             .then((response) => {
-                this.setState({ 
-                    movies: response.data
-                });
+                getMoviesResponseHandler.bind(this)(response);                
 
                 this.searchString = searchValue;
+                this.setState({ currentPage: 1 });
             })
-            .catch((error) => {
-                console.log(error);
-            });
+            .catch(getMoviesErrorHandler);
     }
 
     onOpenModal() {
@@ -85,28 +76,28 @@ export default class App extends Component {
 
     componentDidMount() {
         getMovies()
-            .then((response) => {
-                this.setState({ 
-                    movies: response.data
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+            .then(getMoviesResponseHandler.bind(this))
+            .catch(getMoviesErrorHandler);
     }
 
     onSortChangeHandler(newSort) {
-        getMovies(this.searchString, newSort)
+        getMovies(this.searchString, newSort, this.state.currentPage)
             .then((response) => {
-                this.setState({ 
-                    movies: response.data
-                });
+                getMoviesResponseHandler.bind(this)(response);
 
                 this.currentSort = newSort;
             })
-            .catch((error) => {
-                console.log(error);
-            });
+            .catch(getMoviesErrorHandler);
+    }
+
+    onPageChangeHandler(pageNumber) {        
+        getMovies(this.searchString, this.currentSort, pageNumber)
+            .then((response) => {
+                getMoviesResponseHandler.bind(this)(response);
+
+                this.setState({ currentPage: pageNumber });
+            })
+            .catch(getMoviesErrorHandler);
     }
 
     render() {
@@ -116,6 +107,10 @@ export default class App extends Component {
                 <ListInstruments onSelectChange = { this.onSortChangeHandler.bind(this) } />
                 <MoviesList movies = { this.state.movies } 
                         onOpenModalInfo = { this.onOpenModalInfo.bind(this) } 
+                />
+                <CustomPagination totalItemsCount = { this.state.fullMoviesAmount }                        
+                        onChange = { this.onPageChangeHandler.bind(this) }
+                        activePage = { this.state.currentPage }
                 />
                 <Modal open={ this.state.modalOpen } 
                         onClose = { this.onCloseModal.bind(this) } 

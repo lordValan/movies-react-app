@@ -1,0 +1,46 @@
+.paginationList {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > li:not(:last-child) {        
+        margin-right: 10px;
+    }
+
+    & > li {
+        font-size: 1.2em;
+
+        & > a {
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            opacity: 0.75;
+            transition: opacity 0.1s ease-in-out;
+
+            &:focus,
+            &:active {
+                outline: none;
+            }
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        &.disabled {
+            & > a {
+                opacity: 0.1;
+                cursor: not-allowed;
+            }            
+        }
+        
+        &.active {
+            & > a {
+                opacity: 1;
+            }
+        }
+    }
+}

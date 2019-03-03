@@ -55,7 +55,19 @@ router.get('/movies', async(req, res) => {
             .skip(offset)
             .limit(ITEMS_PER_PAGE);
 
-        return res.json(movies);
+        const count = await MovieModel
+            .count(search);
+
+        const maxNumPages = !(count % ITEMS_PER_PAGE) ? count / ITEMS_PER_PAGE : Math.trunc(count / ITEMS_PER_PAGE) + 1;
+
+        const shownAmount = ITEMS_PER_PAGE * (page - 1) + movies.length;
+
+        return res.json({
+            fullAmount: count,
+            maxNumPages,
+            shownAmount,
+            movies            
+        });
     } catch (error) {
         return res.status(500).json(error.errmsg);
     }
