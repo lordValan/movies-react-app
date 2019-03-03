@@ -16,6 +16,10 @@ class MovieInfo extends Component {
                 <h2>{ this.props.movie.name }</h2>
                 <ul>
                     <li>
+                        <strong>Unique key: </strong>
+                        { this.props.movie._id }
+                    </li>
+                    <li>
                         <strong>Year: </strong>
                         { this.props.movie.year }
                     </li>

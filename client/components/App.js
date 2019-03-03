@@ -11,6 +11,17 @@ import Searcher from './Searcher';
 import MoviesList from './MoviesList';
 import Modal from 'react-responsive-modal';
 import MovieInfo from './MovieInfo';
+import ListInstruments from './ListInstruments';
+
+const getMovies = (s = '', sort = 'default', page = 1) => {
+    return axios.get('/movies', {
+        params: {
+            s: s,
+            sort: sort,
+            page: page
+        }
+    });
+}
 
 export default class App extends Component {
     constructor(props) {
@@ -19,10 +30,11 @@ export default class App extends Component {
         WebFont.load(Settings.fontsLoad);
 
         this.currentMovie = null;
+        this.searchString = '';
+        this.currentSort = 'default';
 
         this.state = {
             movies: [],
-            searchString: '',
             currentPage: 1,
             modalOpen: false,
             showInfo: false,
@@ -33,16 +45,13 @@ export default class App extends Component {
     }
 
     onSearchStringChangeHandler(searchValue) {
-        axios.get('/movies', {
-                params: {
-                    s: searchValue
-                }
-            })
+        getMovies(searchValue, this.currentSort)
             .then((response) => {
                 this.setState({ 
-                    movies: response.data,
-                    searchString: searchValue
+                    movies: response.data
                 });
+
+                this.searchString = searchValue;
             })
             .catch((error) => {
                 console.log(error);
@@ -75,7 +84,7 @@ export default class App extends Component {
     }
 
     componentDidMount() {
-        axios.get('/movies')
+        getMovies()
             .then((response) => {
                 this.setState({ 
                     movies: response.data
@@ -86,10 +95,25 @@ export default class App extends Component {
             });
     }
 
+    onSortChangeHandler(newSort) {
+        getMovies(this.searchString, newSort)
+            .then((response) => {
+                this.setState({ 
+                    movies: response.data
+                });
+
+                this.currentSort = newSort;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
     render() {
         return (
             <Fragment>
                 <Searcher onSearchHandler = { this.onSearchStringChangeHandler.bind(this) }  />
+                <ListInstruments onSelectChange = { this.onSortChangeHandler.bind(this) } />
                 <MoviesList movies = { this.state.movies } 
                         onOpenModalInfo = { this.onOpenModalInfo.bind(this) } 
                 />
