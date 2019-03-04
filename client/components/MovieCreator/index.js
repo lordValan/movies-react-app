@@ -8,7 +8,7 @@ import { MOVIE_FORMATS } from '../../../main/constants';
 // Components
 import TagsInput from 'react-tagsinput';
 import Select from 'react-select';
-import Conformator from './Conformator';
+import Conformator from '../Conformator';
 
 const options = [];
 
@@ -128,10 +128,8 @@ class MovieCreator extends Component {
                     <section className = { `${styles.formSection} ${styles.formSubmitSection}` } >
                         { 
                             this.state.showConfirm ? 
-                                <Conformator movie = { this.state.movie } 
-                                        onAccept = { this.props.onSend }
-                                        onCancel = { () => this.setState( { showConfirm: false } ) }
-                                        className = { styles.sendConformator }
+                                <Conformator onAccept = { () => this.props.onSend(this.state.movie) }
+                                        onCancel = { () => this.setState( { showConfirm: false } ) }                                        
                                 /> 
                                 : 
                                 null 

@@ -34,7 +34,7 @@ const ListInstruments = (props) => {
             >
                 Create movie
             </button>
-            <button onClick = { props.onOpenModalCreate } 
+            <button onClick = { props.onOpenModalImport } 
                     className = { styles.importMoviesBt } 
             >
                 Import movies
@@ -52,7 +52,8 @@ ListInstruments.propTypes = {
     onSelectChange: PropTypes.func.isRequired,
     moviesShown: PropTypes.number.isRequired,
     moviesFullAmount: PropTypes.number.isRequired,
-    onOpenModalCreate: PropTypes.func.isRequired
+    onOpenModalCreate: PropTypes.func.isRequired,
+    onOpenModalImport: PropTypes.func.isRequired
 }
 
 export default ListInstruments;

@@ -60,7 +60,22 @@ function removeMovie(id) {
     });
 };
 
+// import from file
+
+function importMovies(file) {
+    let data = new FormData();
+    data.append('file', file, file.name);
+
+    const headers = {
+        headers: {
+            'content-type': 'multipart/form-data'
+        }
+    };
+
+    return axios.post('/movies', data, headers);
+}
+
 export {
     getMovies, getMoviesResponseHandler, getMoviesErrorHandler, removeMovie, 
-    updateMovie, createMovie
+    updateMovie, createMovie, importMovies
 }

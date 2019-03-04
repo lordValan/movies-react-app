@@ -39,17 +39,6 @@
         align-items: center;
     }
 
-    .sendConformator {
-        position: absolute;
-        right: 5px;
-        top: -70px;
-        padding: 10px;
-        box-sizing: border-box;
-        background-color: #e7e7e7;
-        border-radius: 4px;
-        border: 1px solid #bdc2c6;
-    }
-
     .formBtubmit {
         @extend %primary-button;
     }

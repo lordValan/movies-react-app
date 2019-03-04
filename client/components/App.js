@@ -4,7 +4,7 @@ import React, { Component, Fragment } from 'react';
 import { Settings } from '../utils';
 import WebFont from 'webfontloader';
 import { getMovies, getMoviesResponseHandler, getMoviesErrorHandler, 
-            removeMovie, updateMovie, createMovie } from './Methods';
+            removeMovie, updateMovie, createMovie, importMovies } from './Methods';
 import { ITEMS_PER_PAGE } from '..//../main/constants';
 // Styles
 import '../sass/styles.scss';
@@ -17,6 +17,7 @@ import ListInstruments from './ListInstruments';
 import CustomPagination from './Pagination';
 import RemoveAcceptor from './RemoveAcceptor';
 import MovieCreator from './MovieCreator';
+import MoviesImporter from './MoviesImporter';
 
 export default class App extends Component {
     constructor(props) {
@@ -200,6 +201,26 @@ export default class App extends Component {
             });
     }
 
+    // import handlers
+    
+    importMoviesHandler(file) {
+        importMovies(file)
+            .then((response) => {
+                console.log(response);
+                this.setState({
+                    successMessage: 'Movies are successfully imported!'
+                });
+
+                this.reFetchMovies();
+            })
+            .catch((error) => {
+                console.log(error.response);
+                this.setState({
+                    errorMessage: error.response.data
+                });
+            });
+    }
+
     // helpers
 
     reFetchMovies() {
@@ -226,6 +247,7 @@ export default class App extends Component {
                         moviesShown = { this.state.shownMoviesAmount }
                         moviesFullAmount = { this.state.fullMoviesAmount }
                         onOpenModalCreate = { this.onOpenModalCreate.bind(this) }
+                        onOpenModalImport = { this.onOpenModalImport.bind(this) }
                 />
                 <MoviesList movies = { this.state.movies } 
                         onOpenModalInfo = { this.onOpenModalInfo.bind(this) } 
@@ -259,6 +281,10 @@ export default class App extends Component {
                             onCancel = { this.onCloseModal.bind(this) }
                             error = { this.state.errorMessage }
                             success = { this.state.successMessage } />: null }
+                    { this.state.showImport ? <MoviesImporter onSend = { this.importMoviesHandler.bind(this) } 
+                            error = { this.state.errorMessage }
+                            success = { this.state.successMessage }
+                    /> : null }
                 </Modal>                
             </Fragment>         
         )

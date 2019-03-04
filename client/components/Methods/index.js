@@ -1,9 +1,9 @@
 import { getMovies, getMoviesResponseHandler, getMoviesErrorHandler, 
-            removeMovie, updateMovie, createMovie } from './movieManipulations';
+            removeMovie, updateMovie, createMovie, importMovies } from './movieManipulations';
 import { setSearchHighlighted } from './other';
 
 export {
     getMovies, getMoviesResponseHandler, getMoviesErrorHandler,
-    removeMovie, updateMovie, createMovie,
+    removeMovie, updateMovie, createMovie, importMovies,
     setSearchHighlighted
 }

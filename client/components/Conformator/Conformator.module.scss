@@ -1,7 +1,16 @@
-@import '../../../sass/partials/vme';
+@import '../../sass/partials/vme';
 
 
 .conformator {
+    position: absolute;
+    top: -70px;
+    right: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #e7e7e7;
+    border-radius: 4px;
+    border: 1px solid #bdc2c6;
+        
     .buttons {
         display: flex;
         align-items: center;

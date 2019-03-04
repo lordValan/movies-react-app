@@ -1,0 +1,51 @@
+@import '../../sass/partials/vme';
+
+.moviesImporter {
+    padding: 25px 35px;
+    box-sizing: border-box;
+    width: 500px;
+
+    .formSection {        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 0;
+        position: relative;
+
+        .inputLabel {
+            @extend %button; 
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 25px;
+            color: #fff;
+            font-size: 16px;
+            background-color: $input-primary-color;
+            transition: background-color 0.2s ease-in-out;
+
+            &:hover {
+                transform: none;
+                background-color: darken($color: $input-primary-color, $amount: 10%);
+            }
+
+            & + input[type="file"] {
+                display: none;
+            }
+
+            .inputLabelIcon {
+                width: 1.3em;
+                height: 1.3em;
+                margin-right: 10px;
+            }
+        }
+
+        &.formSubmitSection {
+            justify-content: flex-end;
+        }
+    
+        .formBtubmit {
+            @extend %primary-button;
+        }
+    }
+
+    
+}

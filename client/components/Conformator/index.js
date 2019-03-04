@@ -35,13 +35,13 @@ class Conformator extends Component {
     }
 
     onAcceptClickHandler() {
-        this.props.onAccept(this.props.movie);
+        this.props.onAccept();
         this.props.onCancel();
     }
 
     render() {
         return (
-            <section className = { `${styles.conformator} ${this.props.className}` } ref={ this.setWrapperRef } >
+            <section className = { styles.conformator } ref={ this.setWrapperRef } >
                 <p>Are you sure?</p>
                 <section className = { styles.buttons }>
                     <button className = { styles.btCancel }
@@ -61,7 +61,6 @@ class Conformator extends Component {
 }
 
 Conformator.propTypes = {
-    movie: PropTypes.object.isRequired,
     onAccept: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
 }
