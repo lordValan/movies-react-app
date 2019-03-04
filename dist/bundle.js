@@ -326,7 +326,7 @@ eval("__webpack_require__.r(__webpack_exports__);\nvar Settings = {\n  fontsLoad
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("var MAIN_CONSTANTS = {\n  MOVIE_FORMATS: ['VHS', 'DVD', 'Blu-Ray'],\n  SORT_ITEMS: {\n    name_asc: {\n      key: 'name_asc',\n      value: 'Sort by name ⬇️'\n    },\n    name_desc: {\n      key: 'name_desc',\n      value: 'Sort by name ⬆️'\n    },\n    year_asc: {\n      key: 'year_asc',\n      value: 'Sort by year ⬇️'\n    },\n    year_desc: {\n      key: 'year_desc',\n      value: 'Sort by year ⬆️'\n    },\n    format_asc: {\n      key: 'format_asc',\n      value: 'Sort by format ⬇️'\n    },\n    format_desc: {\n      key: 'format_desc',\n      value: 'Sort by format ⬆️'\n    }\n  }\n};\nmodule.exports = MAIN_CONSTANTS;\n\n//# sourceURL=webpack:///./main/constants/index.js?");
+eval("var MAIN_CONSTANTS = {\n  MOVIE_FORMATS: ['VHS', 'DVD', 'Blu-Ray'],\n  SORT_ITEMS: {\n    name_asc: {\n      key: 'name_asc',\n      value: 'Sort by name ⬇️'\n    },\n    name_desc: {\n      key: 'name_desc',\n      value: 'Sort by name ⬆️'\n    },\n    year_asc: {\n      key: 'year_asc',\n      value: 'Sort by year ⬇️'\n    },\n    year_desc: {\n      key: 'year_desc',\n      value: 'Sort by year ⬆️'\n    },\n    format_asc: {\n      key: 'format_asc',\n      value: 'Sort by format ⬇️'\n    },\n    format_desc: {\n      key: 'format_desc',\n      value: 'Sort by format ⬆️'\n    }\n  },\n  ITEMS_PER_PAGE: 10\n};\nmodule.exports = MAIN_CONSTANTS;\n\n//# sourceURL=webpack:///./main/constants/index.js?");
 
 /***/ }),
 
