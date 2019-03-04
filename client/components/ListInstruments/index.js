@@ -29,6 +29,16 @@ const ListInstruments = (props) => {
             <MoviesPagesBoard shown = { props.moviesShown }
                     fullAmount = { props.moviesFullAmount }
             />
+            <button onClick = { props.onOpenModalCreate } 
+                    className = { styles.addNewMovieBt } 
+            >
+                Create movie
+            </button>
+            <button onClick = { props.onOpenModalCreate } 
+                    className = { styles.importMoviesBt } 
+            >
+                Import movies
+            </button>
             <Select className = { styles.sortSelect } 
                     options = { options } 
                     defaultValue = { options[0] } 
@@ -41,7 +51,8 @@ const ListInstruments = (props) => {
 ListInstruments.propTypes = {
     onSelectChange: PropTypes.func.isRequired,
     moviesShown: PropTypes.number.isRequired,
-    moviesFullAmount: PropTypes.number.isRequired
+    moviesFullAmount: PropTypes.number.isRequired,
+    onOpenModalCreate: PropTypes.func.isRequired
 }
 
 export default ListInstruments;

@@ -30,7 +30,6 @@ function getMoviesErrorHandler(error) {
 // update
 
 function updateMovie(movie) {
-    console.log(movie);
     return axios.put('/movie', {        
         name: movie.name,
         year: movie.year,
@@ -41,6 +40,15 @@ function updateMovie(movie) {
 };
 
 // create
+
+function createMovie(movie) {
+    return axios.post('/movie', {        
+        name: movie.name,
+        year: movie.year,
+        format: movie.format,
+        actors: movie.actors       
+    });
+};
 
 //delete
 
@@ -53,5 +61,6 @@ function removeMovie(id) {
 };
 
 export {
-    getMovies, getMoviesResponseHandler, getMoviesErrorHandler, removeMovie, updateMovie
+    getMovies, getMoviesResponseHandler, getMoviesErrorHandler, removeMovie, 
+    updateMovie, createMovie
 }

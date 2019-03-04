@@ -25,7 +25,7 @@ for (const key in MOVIE_FORMATS) {
 const newMovie = {
     name: '',
     year: 2000,
-    format: options[0],
+    format: options[0].value,
     actors: []
 }
 
@@ -82,6 +82,8 @@ class MovieCreator extends Component {
     }
 
     render() {
+        let defaultOption = options[this.getFormatPosition(this.state.movie.format)];
+
         return ( 
             <section className = { styles.movieCreator } >
                 <form onSubmit = { this.onFormSubmitHandler.bind(this) } >
@@ -108,7 +110,7 @@ class MovieCreator extends Component {
                     <section className = { styles.formSection } >
                         <label className = { styles.formLabel } >Format</label>
                         <Select options = { options } 
-                            defaultValue = { options[this.getFormatPosition(this.state.movie.format)] } 
+                            defaultValue = { defaultOption } 
                             onChange = { this.onFormatChangeHandler.bind(this) }
                         />
                     </section>

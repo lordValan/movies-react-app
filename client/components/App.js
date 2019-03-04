@@ -3,7 +3,8 @@ import React, { Component, Fragment } from 'react';
 // Instruments
 import { Settings } from '../utils';
 import WebFont from 'webfontloader';
-import { getMovies, getMoviesResponseHandler, getMoviesErrorHandler, removeMovie, updateMovie } from './Methods';
+import { getMovies, getMoviesResponseHandler, getMoviesErrorHandler, 
+            removeMovie, updateMovie, createMovie } from './Methods';
 import { ITEMS_PER_PAGE } from '..//../main/constants';
 // Styles
 import '../sass/styles.scss';
@@ -36,6 +37,7 @@ export default class App extends Component {
             showInfo: false,
             showEditor: false,
             showCreateEditor: false,
+            showImport: false,
             showRemoveMovie: false,
             searchString: '',
             errorMessage: null,
@@ -58,6 +60,7 @@ export default class App extends Component {
             showEditor: false,
             showCreateEditor: false,
             showRemoveMovie: false,
+            showImport: false,
             errorMessage: null,
             successMessage: null
         });
@@ -94,6 +97,13 @@ export default class App extends Component {
         this.setState({
             modalOpen: true,
             showEditor: true
+        });
+    }
+
+    onOpenModalImport() {
+        this.setState({
+            modalOpen: true,
+            showImport: true
         });
     }
 
@@ -152,17 +162,7 @@ export default class App extends Component {
                     errorMessage: error.response.data
                 });
             });
-    }
-
-    reFetchMovies() {
-        getMovies(this.state.searchString, this.currentSort, this.state.currentPage)
-            .then((response) => {
-                getMoviesResponseHandler.bind(this)(response);
-
-                this.onCloseModal();
-            })
-            .catch(getMoviesErrorHandler);
-    }
+    }    
 
     // update handlers
 
@@ -180,6 +180,36 @@ export default class App extends Component {
                     errorMessage: error.response.data
                 });
             });
+    }
+
+    // create handlers
+
+    createMovieHandler(movie) {
+        createMovie(movie)
+            .then((response) => {
+                this.setState({
+                    successMessage: 'The movie is successfully created!'
+                });
+
+                this.reFetchMovies();
+            })
+            .catch((error) => {
+                this.setState({
+                    errorMessage: error.response.data
+                });
+            });
+    }
+
+    // helpers
+
+    reFetchMovies() {
+        getMovies(this.state.searchString, this.currentSort, this.state.currentPage)
+            .then((response) => {
+                getMoviesResponseHandler.bind(this)(response);
+
+                this.onCloseModal();
+            })
+            .catch(getMoviesErrorHandler);
     }
 
     componentDidMount() {
@@ -220,7 +250,7 @@ export default class App extends Component {
                             error = { this.state.errorMessage }
                             success = { this.state.successMessage }
                     /> : null }
-                    { this.state.showCreateEditor ? <MovieCreator onSend = { this.updateMovieHandler.bind(this) } 
+                    { this.state.showCreateEditor ? <MovieCreator onSend = { this.createMovieHandler.bind(this) } 
                             error = { this.state.errorMessage }
                             success = { this.state.successMessage }
                     /> : null }
