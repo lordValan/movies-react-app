@@ -4,6 +4,7 @@ import React, { Component, Fragment } from 'react';
 import { Settings } from '../utils';
 import WebFont from 'webfontloader';
 import { getMovies, getMoviesResponseHandler, getMoviesErrorHandler } from './Methods';
+import { ITEMS_PER_PAGE } from '..//../main/constants';
 // Styles
 import '../sass/styles.scss';
 // Components
@@ -21,7 +22,6 @@ export default class App extends Component {
         WebFont.load(Settings.fontsLoad);
 
         this.currentMovie = null;
-        this.searchString = '';
         this.currentSort = 'default';
 
         this.state = {
@@ -34,7 +34,8 @@ export default class App extends Component {
             showInfo: false,
             showEditor: false,
             showCreateEditor: false,
-            showRemoveMovie: false
+            showRemoveMovie: false,
+            searchString: ''
         }
     }
 
@@ -43,8 +44,10 @@ export default class App extends Component {
             .then((response) => {
                 getMoviesResponseHandler.bind(this)(response);                
 
-                this.searchString = searchValue;
-                this.setState({ currentPage: 1 });
+                this.setState({ 
+                    currentPage: 1,
+                    searchString: searchValue
+                });
             })
             .catch(getMoviesErrorHandler);
     }
@@ -81,7 +84,7 @@ export default class App extends Component {
     }
 
     onSortChangeHandler(newSort) {
-        getMovies(this.searchString, newSort, this.state.currentPage)
+        getMovies(this.state.searchString, newSort, this.state.currentPage)
             .then((response) => {
                 getMoviesResponseHandler.bind(this)(response);
 
@@ -91,7 +94,7 @@ export default class App extends Component {
     }
 
     onPageChangeHandler(pageNumber) {        
-        getMovies(this.searchString, this.currentSort, pageNumber)
+        getMovies(this.state.searchString, this.currentSort, pageNumber)
             .then((response) => {
                 getMoviesResponseHandler.bind(this)(response);
 
@@ -104,20 +107,25 @@ export default class App extends Component {
         return (
             <Fragment>
                 <Searcher onSearchHandler = { this.onSearchStringChangeHandler.bind(this) }  />
-                <ListInstruments onSelectChange = { this.onSortChangeHandler.bind(this) } />
+                <ListInstruments onSelectChange = { this.onSortChangeHandler.bind(this) } 
+                        moviesShown = { this.state.shownMoviesAmount }
+                        moviesFullAmount = { this.state.fullMoviesAmount }
+                />
                 <MoviesList movies = { this.state.movies } 
                         onOpenModalInfo = { this.onOpenModalInfo.bind(this) } 
+                        searchString = { this.state.searchString }
                 />
                 <CustomPagination totalItemsCount = { this.state.fullMoviesAmount }                        
                         onChange = { this.onPageChangeHandler.bind(this) }
                         activePage = { this.state.currentPage }
+                        itemsCountPerPage = { ITEMS_PER_PAGE }
                 />
                 <Modal open={ this.state.modalOpen } 
                         onClose = { this.onCloseModal.bind(this) } 
                         center
                         classNames = { { closeButton: 'close-modal-button' } }
                 > 
-                    { this.state.showInfo ? <MovieInfo movie = { this.currentMovie } /> : null }
+                    { this.state.showInfo ? <MovieInfo movie = { this.currentMovie } searchString = { this.state.searchString } /> : null }
                     { this.state.showEditor ? <p>Editor</p> : null }
                     { this.state.showCreateEditor ? <p>Create Editor</p> : null }
                     { this.state.showRemoveMovie ? <p>Remove</p> : null }

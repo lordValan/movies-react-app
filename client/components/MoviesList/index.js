@@ -5,6 +5,7 @@ import styles from './MoviesList.module.scss';
 // Instruments
 import PropTypes from 'prop-types';
 import { MdDelete, MdEdit, MdInfo } from "react-icons/md";
+import { setSearchHighlighted } from '../Methods';
 
 const gradients = [
     styles.darkBlue, styles.coolBlues, styles.moonlitAsteroid, styles.amin, styles.kyooTah,
@@ -46,7 +47,11 @@ class MoviesList extends Component {
                         <div key = { movie._id } 
                             className = { `${styles.moviesItem} ${this.colors[movie._id]}` }
                         >
-                            <span className = { styles.movieName }>{ movie.name }</span>
+                            <span className = { styles.movieName } 
+                                dangerouslySetInnerHTML = {{
+                                    __html: setSearchHighlighted(this.props.searchString, movie.name)
+                                }}
+                            />
                             <span className = { styles.movieYear }>{ movie.year }</span> 
                             <div className = { styles.movieInstruments }>
                                 <button className = { styles.movieInstrumentsBt } 
@@ -74,7 +79,8 @@ class MoviesList extends Component {
 }
 
 MoviesList.propTypes = {
-    movies: PropTypes.array.isRequired
+    movies: PropTypes.array.isRequired,
+    searchString: PropTypes.string
 }
 
 export default MoviesList;

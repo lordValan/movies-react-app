@@ -4,6 +4,7 @@ import React from 'react';
 import styles from './ListInstruments.module.scss';
 // Components
 import Select from 'react-select';
+import MoviesPagesBoard from '../MoviesPagesBoard';
 // Instruments
 import { SORT_ITEMS } from '../../../main/constants';
 import PropTypes from 'prop-types';
@@ -25,6 +26,9 @@ for (const key in SORT_ITEMS) {
 const ListInstruments = (props) => {
     return (
         <section className = { styles.instrumentsSection } >
+            <MoviesPagesBoard shown = { props.moviesShown }
+                    fullAmount = { props.moviesFullAmount }
+            />
             <Select className = { styles.sortSelect } 
                     options = { options } 
                     defaultValue = { options[0] } 
@@ -35,7 +39,9 @@ const ListInstruments = (props) => {
 }
 
 ListInstruments.propTypes = {
-    onSelectChange: PropTypes.func.isRequired
+    onSelectChange: PropTypes.func.isRequired,
+    moviesShown: PropTypes.number.isRequired,
+    moviesFullAmount: PropTypes.number.isRequired
 }
 
 export default ListInstruments;

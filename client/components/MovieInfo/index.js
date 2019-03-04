@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import styles from './MovieInfo.module.scss';
 // Instruments
 import PropTypes from 'prop-types';
+import { setSearchHighlighted } from '../Methods';
 
 class MovieInfo extends Component {
     constructor(props) {
@@ -13,7 +14,9 @@ class MovieInfo extends Component {
     render() {
         return (
             <section className = { styles.movieInfo }>
-                <h2>{ this.props.movie.name }</h2>
+                <h2 dangerouslySetInnerHTML = {{
+                    __html: setSearchHighlighted(this.props.searchString, this.props.movie.name)
+                }} />
                 <ul>
                     <li>
                         <strong>Unique key: </strong>
@@ -29,7 +32,13 @@ class MovieInfo extends Component {
                     </li>
                     <li>
                         <strong>Actors: </strong>
-                        { this.props.movie.actors.join(', ') }
+                        <ul>
+                        { this.props.movie.actors.map((actor) => {
+                            return <li key = { actor } dangerouslySetInnerHTML = {{
+                                __html: setSearchHighlighted(this.props.searchString, actor)
+                            }} />
+                        }) }
+                        </ul>
                     </li>
                 </ul>
             </section>
@@ -38,7 +47,8 @@ class MovieInfo extends Component {
 }
 
 MovieInfo.propTypes = {
-    movie: PropTypes.object.isRequired
+    movie: PropTypes.object.isRequired,
+    searchString: PropTypes.string
 }
 
 export default MovieInfo

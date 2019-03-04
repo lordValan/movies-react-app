@@ -1,7 +1,8 @@
 const MovieModel = require('../models/movies.model');
 const express = require('express');
 const router = express.Router();
-const { SERVER_RESPONSES, ITEMS_PER_PAGE } = require('../constants');
+const { SERVER_RESPONSES } = require('../constants');
+const { ITEMS_PER_PAGE } = require('../../main/constants');
 const { SORT_ITEMS, MOVIE_FORMATS } = require('../../main/constants');
 
 // get movies
