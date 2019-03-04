@@ -137,10 +137,9 @@ export default class App extends Component {
                     .catch(getMoviesErrorHandler);
             })
             .catch((error) => {
-                /* this.setState({
-                    errorMessage: error
-                }); */
-                console.log(error.response.data);
+                this.setState({
+                    errorMessage: error.response.data
+                });
             });
     }
 
