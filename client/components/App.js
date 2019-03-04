@@ -4,7 +4,7 @@ import React, { Component, Fragment } from 'react';
 import { Settings } from '../utils';
 import WebFont from 'webfontloader';
 import { getMovies, getMoviesResponseHandler, getMoviesErrorHandler, 
-            removeMovie, updateMovie, createMovie, importMovies } from './Methods';
+            removeMovie, updateMovie, createMovie, importMovies } from '../utils/methods';
 import { ITEMS_PER_PAGE } from '..//../main/constants';
 // Styles
 import '../sass/styles.scss';
@@ -206,7 +206,6 @@ export default class App extends Component {
     importMoviesHandler(file) {
         importMovies(file)
             .then((response) => {
-                console.log(response);
                 this.setState({
                     successMessage: 'Movies are successfully imported!'
                 });
@@ -214,7 +213,6 @@ export default class App extends Component {
                 this.reFetchMovies();
             })
             .catch((error) => {
-                console.log(error.response);
                 this.setState({
                     errorMessage: error.response.data
                 });

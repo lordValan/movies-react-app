@@ -1,11 +1,11 @@
 // Instruments
 import axios from 'axios';
-import { MdNotificationsActive } from 'react-icons/md';
+import { ROUTES } from '../../../main/constants';
 
 // get
 
 function getMovies(s = '', sort = 'default', page = 1) {
-    return axios.get('/movies', {
+    return axios.get(ROUTES.movies, {
         params: {
             s: s,
             sort: sort,
@@ -30,7 +30,7 @@ function getMoviesErrorHandler(error) {
 // update
 
 function updateMovie(movie) {
-    return axios.put('/movie', {        
+    return axios.put(ROUTES.movie, {        
         name: movie.name,
         year: movie.year,
         format: movie.format,
@@ -42,7 +42,7 @@ function updateMovie(movie) {
 // create
 
 function createMovie(movie) {
-    return axios.post('/movie', {        
+    return axios.post(ROUTES.movie, {        
         name: movie.name,
         year: movie.year,
         format: movie.format,
@@ -53,7 +53,7 @@ function createMovie(movie) {
 //delete
 
 function removeMovie(id) {
-    return axios.delete('/movie', {
+    return axios.delete(ROUTES.movie, {
         data: {
             id
         }
@@ -72,7 +72,7 @@ function importMovies(file) {
         }
     };
 
-    return axios.post('/movies', data, headers);
+    return axios.post(ROUTES.movies, data, headers);
 }
 
 export {

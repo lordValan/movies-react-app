@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import styles from './MovieInfo.module.scss';
 // Instruments
 import PropTypes from 'prop-types';
-import { setSearchHighlighted } from '../Methods';
+import { setSearchHighlighted } from '../../utils/methods';
 
 class MovieInfo extends Component {
     constructor(props) {

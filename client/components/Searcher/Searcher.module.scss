@@ -1,3 +1,5 @@
+@import '../../sass/partials/vme';
+
 /* variables */
 
 $placeholder-color: #d7d7d7;
@@ -8,20 +10,29 @@ $text-color: #000;
 
 .searcher {
     width: 100%;
-    padding: 15px 50px;
+    padding: 5px 20px;
     box-sizing: border-box;
     background-color: $bg-color;
     box-shadow: 0px 5px 5px -2px rgba(0,0,0,0.1);
+
+    @include media($ex-sm) {
+        padding: 15px 50px;       
+    }
 }
 
 .searcherInput {
-    padding: 10px 20px;
-    font-size: 1.5em;
+    padding: 5px 10px;
+    font-size: 1.1em;
     width: 100%;
     box-sizing: border-box;
     text-align: center;
     border: none;
     color: $text-color;
+
+    @include media($ex-sm) {
+        font-size: 1.5em; 
+        padding: 10px 20px;      
+    }
 
     &::placeholder {
         color: $placeholder-color;

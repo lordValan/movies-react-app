@@ -7,11 +7,13 @@ const dotenv = require('dotenv');
 const pathClient = path.resolve(__dirname, 'client');
 const pathDist = path.resolve(__dirname, 'dist');
 
+const isDevelop = process.env.APP_ENV === 'develop' ? true : false;
+
 const CSSModuleLoader = {
     loader: 'css-loader',
     options: {
         modules: true,
-        sourceMap: true,
+        sourceMap: isDevelop,
         localIdentName: '[local]__[hash:base64:5]'
     }
 }
@@ -20,7 +22,7 @@ const CSSLoader = {
     loader: 'css-loader',
     options: {
         modules: false,
-        sourceMap: true
+        sourceMap: isDevelop
     }
 }
 
@@ -28,7 +30,7 @@ const postCSSLoader = {
     loader: 'postcss-loader',
     options: {
         ident: 'postcss',
-        sourceMap: true,
+        sourceMap: isDevelop,
         plugins: () => [
             autoprefixer({
                 browsers: ['>1%', 'last 4 versions', 'Firefox ESR', 'not ie < 9']

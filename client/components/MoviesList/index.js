@@ -5,7 +5,7 @@ import styles from './MoviesList.module.scss';
 // Instruments
 import PropTypes from 'prop-types';
 import { MdDelete, MdEdit, MdInfo } from "react-icons/md";
-import { setSearchHighlighted } from '../Methods';
+import { setSearchHighlighted } from '../../utils/methods';
 
 const gradients = [
     styles.darkBlue, styles.coolBlues, styles.moonlitAsteroid, styles.amin, styles.kyooTah,

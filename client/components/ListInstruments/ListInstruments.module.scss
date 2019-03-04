@@ -5,9 +5,14 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    flex-wrap: wrap;    
 
-    & > *:not(:last-child) {
-        margin-right: 15px;
+    & > * {
+        margin-bottom: 10px;
+    }
+
+    & > *:not(:first-child) {
+        margin-left: 15px;
     }
 }
 

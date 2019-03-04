@@ -1,3 +1,5 @@
+@import '../../sass/partials/vme';
+
 // gradients
 
 .darkBlue {
@@ -58,7 +60,7 @@ $scale-movie-time: 0.15s;
 
 .moviesList {
     max-width: 900px;
-    padding: 50px 0;
+    padding: 20px 15px;
     margin: 0 auto;
     display: grid;
     grid-gap: 10px;

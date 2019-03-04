@@ -1,9 +1,7 @@
 @import '../../sass/partials/vme';
 
 .movieCreator {
-    padding: 25px 35px;
-    box-sizing: border-box;
-    width: 500px;
+    @extend %modal-content;
 }
 
 .formSection {
