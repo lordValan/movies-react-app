@@ -27,7 +27,8 @@ const MAIN_CONSTANTS = {
             key: 'format_desc',
             value: 'Sort by format ⬆️'
         }
-    }
+    },
+    ITEMS_PER_PAGE: 10
 }
 
 module.exports = MAIN_CONSTANTS;
