@@ -6,6 +6,7 @@ const moviesRoute = require('./routes/movies');
 const constants = require('./constants');
 const fileUpload = require('express-fileupload');
 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
