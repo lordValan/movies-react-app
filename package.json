@@ -9,7 +9,7 @@
     "start:development": "concurrently \"npm run start:server\" \"npm run start:client\"",
     "start": "npm run start:development",
     "build": "webpack --config ./webpack.config.js --mode production",
-    "demonstrate": "concurrently \"npm run build\" \"npm run start:server\""
+    "demonstrate": "concurrently \"npm run build\" \"node server/index.js\""
   },
   "repository": {
     "type": "git",
