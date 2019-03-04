@@ -21,6 +21,5 @@ const server_responses = {
 module.exports = {
     DB_CONNECTION: `mongodb://${db_credentials}${db_host}:${db_port}/${db_name}`,
     APP_PORT: app_port,
-    SERVER_RESPONSES: server_responses,
-    ITEMS_PER_PAGE: 10
+    SERVER_RESPONSES: server_responses
 }
