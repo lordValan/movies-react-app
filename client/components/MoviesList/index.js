@@ -59,7 +59,9 @@ class MoviesList extends Component {
                                 >
                                     {<MdInfo />}
                                 </button>
-                                <button className = { styles.movieInstrumentsBt }>
+                                <button className = { styles.movieInstrumentsBt }
+                                        onClick = { () => this.props.onOpenModalEdit(movie) }
+                                >
                                     {<MdEdit />}
                                 </button>
                                 <button className = { styles.movieInstrumentsBt }
@@ -84,7 +86,8 @@ MoviesList.propTypes = {
     movies: PropTypes.array.isRequired,
     searchString: PropTypes.string,
     onOpenModalInfo: PropTypes.func.isRequired,
-    onOpenModalRemove: PropTypes.func.isRequired
+    onOpenModalRemove: PropTypes.func.isRequired,
+    onOpenModalEdit: PropTypes.func.isRequired
 }
 
 export default MoviesList;

@@ -1,6 +1,8 @@
 /* third-party libraries */
 @import '../../node_modules/normalize.css/normalize.css';
+@import '../../node_modules/react-tagsinput/react-tagsinput.css';
 
 /* app files */
 @import './partials/vme';
 @import './partials/app';
+@import './partials/tagsinput-override';

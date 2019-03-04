@@ -1,0 +1,28 @@
+@import '../../../sass/partials/vme';
+
+
+.conformator {
+    .buttons {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    
+        & > *:not(:last-child) {
+            margin-right: 5px;
+        }
+    }
+
+    p {
+        margin: 0;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+    
+    .btAccept {
+        @extend %primary-button;
+    }
+    
+    .btCancel {
+        @extend %default-button;
+    }
+}

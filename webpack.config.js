@@ -53,6 +53,10 @@ module.exports = {
                 use: ['babel-loader']
             },
             {
+                test: /\.css$/,
+                use: ['style-loader', CSSLoader, postCSSLoader]
+            },
+            {
                 test: /\.scss$/,
                 exclude: /\.module\.scss$/,
                 use: ['style-loader', CSSLoader, postCSSLoader, 'sass-loader']

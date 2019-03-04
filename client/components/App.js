@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 // Instruments
 import { Settings } from '../utils';
 import WebFont from 'webfontloader';
-import { getMovies, getMoviesResponseHandler, getMoviesErrorHandler, removeMovie } from './Methods';
+import { getMovies, getMoviesResponseHandler, getMoviesErrorHandler, removeMovie, updateMovie } from './Methods';
 import { ITEMS_PER_PAGE } from '..//../main/constants';
 // Styles
 import '../sass/styles.scss';
@@ -15,6 +15,7 @@ import MovieInfo from './MovieInfo';
 import ListInstruments from './ListInstruments';
 import CustomPagination from './Pagination';
 import RemoveAcceptor from './RemoveAcceptor';
+import MovieCreator from './MovieCreator';
 
 export default class App extends Component {
     constructor(props) {
@@ -80,6 +81,22 @@ export default class App extends Component {
         });
     }
 
+    onOpenModalCreate() {
+        this.setState({
+            modalOpen: true,
+            showCreateEditor: true
+        });
+    }
+
+    onOpenModalEdit(movie) {
+        this.currentMovie = movie;
+
+        this.setState({
+            modalOpen: true,
+            showEditor: true
+        });
+    }
+
     // search handlers
 
     onSearchStringChangeHandler(searchValue) {
@@ -128,13 +145,35 @@ export default class App extends Component {
                     successMessage: 'The movie is successfully removed!'
                 });
 
-                getMovies(this.state.searchString, this.currentSort, this.state.currentPage)
-                    .then((response) => {
-                        getMoviesResponseHandler.bind(this)(response);
-        
-                        this.onCloseModal();
-                    })
-                    .catch(getMoviesErrorHandler);
+                this.reFetchMovies();
+            })
+            .catch((error) => {
+                this.setState({
+                    errorMessage: error.response.data
+                });
+            });
+    }
+
+    reFetchMovies() {
+        getMovies(this.state.searchString, this.currentSort, this.state.currentPage)
+            .then((response) => {
+                getMoviesResponseHandler.bind(this)(response);
+
+                this.onCloseModal();
+            })
+            .catch(getMoviesErrorHandler);
+    }
+
+    // update handlers
+
+    updateMovieHandler(movie) {
+        updateMovie(movie)
+            .then((response) => {
+                this.setState({
+                    successMessage: 'The movie is successfully updated!'
+                });
+
+                this.reFetchMovies();
             })
             .catch((error) => {
                 this.setState({
@@ -156,10 +195,12 @@ export default class App extends Component {
                 <ListInstruments onSelectChange = { this.onSortChangeHandler.bind(this) } 
                         moviesShown = { this.state.shownMoviesAmount }
                         moviesFullAmount = { this.state.fullMoviesAmount }
+                        onOpenModalCreate = { this.onOpenModalCreate.bind(this) }
                 />
                 <MoviesList movies = { this.state.movies } 
                         onOpenModalInfo = { this.onOpenModalInfo.bind(this) } 
                         onOpenModalRemove = { this.onOpenModalRemove.bind(this) }
+                        onOpenModalEdit = { this.onOpenModalEdit.bind(this) }
                         searchString = { this.state.searchString }
                 />
                 <CustomPagination totalItemsCount = { this.state.fullMoviesAmount }                        
@@ -174,8 +215,15 @@ export default class App extends Component {
                 > 
                     { this.state.showInfo ? <MovieInfo movie = { this.currentMovie } 
                             searchString = { this.state.searchString } /> : null }
-                    { this.state.showEditor ? <p>Editor</p> : null }
-                    { this.state.showCreateEditor ? <p>Create Editor</p> : null }
+                    { this.state.showEditor ? <MovieCreator movie = { this.currentMovie }
+                            onSend = { this.updateMovieHandler.bind(this) } 
+                            error = { this.state.errorMessage }
+                            success = { this.state.successMessage }
+                    /> : null }
+                    { this.state.showCreateEditor ? <MovieCreator onSend = { this.updateMovieHandler.bind(this) } 
+                            error = { this.state.errorMessage }
+                            success = { this.state.successMessage }
+                    /> : null }
                     { this.state.showRemoveMovie ? <RemoveAcceptor movie = { this.currentMovie } 
                             onAccept = { this.removeMovieHandler.bind(this) }
                             onCancel = { this.onCloseModal.bind(this) }

@@ -1,0 +1,27 @@
+@import './vme';
+
+.react-tagsinput {
+    cursor: text;
+    border-radius: 4px;
+
+    &-tag {
+        border-color: $input-primary-color;
+        color: #3f4040;
+        background-color: lighten($color: $input-primary-color, $amount: 30%);
+    }
+
+    &-remove {
+        color: $input-primary-color;
+    }
+
+    &--focused {
+        border-color: $input-primary-color;
+        box-shadow: 0 0 0 1px $input-primary-color;
+    }
+
+    input {
+        font-size: 14px;
+        color: #1d3648;
+        width: 100px;
+    }
+}

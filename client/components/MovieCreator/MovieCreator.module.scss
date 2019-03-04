@@ -1,0 +1,56 @@
+@import '../../sass/partials/vme';
+
+.movieCreator {
+    padding: 25px 35px;
+    box-sizing: border-box;
+    width: 500px;
+}
+
+.formSection {
+    padding: 5px 0;
+    position: relative;
+
+    .formLabel {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .formInput {
+        width: 100%;
+        font-size: 16px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        overflow: hidden;
+        padding: 10px;
+        box-sizing: border-box;
+        line-height: 1;
+
+        &:focus,
+        &:active {
+            outline: none;
+            border-color: $input-primary-color;
+            box-shadow: 0 0 0 1px $input-primary-color;
+        }
+    }
+
+    &.formSubmitSection {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .sendConformator {
+        position: absolute;
+        right: 5px;
+        top: -70px;
+        padding: 10px;
+        box-sizing: border-box;
+        background-color: #e7e7e7;
+        border-radius: 4px;
+        border: 1px solid #bdc2c6;
+    }
+
+    .formBtubmit {
+        @extend %primary-button;
+    }
+}

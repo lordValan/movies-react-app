@@ -38,6 +38,7 @@
     "react-js-pagination": "^3.0.2",
     "react-responsive-modal": "^3.6.0",
     "react-select": "^2.4.1",
+    "react-tagsinput": "^3.19.0",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
