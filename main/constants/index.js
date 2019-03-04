@@ -28,7 +28,11 @@ const MAIN_CONSTANTS = {
             value: 'Sort by format ⬆️'
         }
     },
-    ITEMS_PER_PAGE: 10
+    ITEMS_PER_PAGE: 10,
+    ROUTES: {
+        movie: '/api/movie',
+        movies: '/api/movies'
+    }
 }
 
 module.exports = MAIN_CONSTANTS;
