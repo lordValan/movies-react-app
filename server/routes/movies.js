@@ -2,11 +2,11 @@ const MovieModel = require('../models/movies.model');
 const express = require('express');
 const router = express.Router();
 const { SERVER_RESPONSES } = require('../constants');
-const { ITEMS_PER_PAGE } = require('../../main/constants');
+const { ITEMS_PER_PAGE, ROUTES } = require('../../main/constants');
 const { SORT_ITEMS, MOVIE_FORMATS } = require('../../main/constants');
 
 // get movies
-router.get('/movies', async(req, res) => {
+router.get(ROUTES.movies, async(req, res) => {
     const page = req.query.page ? req.query.page : 1;
     const offset = (page - 1) * ITEMS_PER_PAGE;
 
@@ -75,7 +75,7 @@ router.get('/movies', async(req, res) => {
 });
 
 // create new movie
-router.post('/movie', async(req, res) => {
+router.post(ROUTES.movie, async(req, res) => {
     if (!req.body) {
         return res.status(400).send(SERVER_RESPONSES.EMPTY_REQ_BODY);
     }
@@ -104,7 +104,7 @@ router.post('/movie', async(req, res) => {
 });
 
 // update movie
-router.put('/movie', async(req, res) => {
+router.put(ROUTES.movie, async(req, res) => {
     if (!req.body) {
         return res.status(400).send(SERVER_RESPONSES.EMPTY_REQ_BODY);
     }
@@ -127,7 +127,7 @@ router.put('/movie', async(req, res) => {
 });
 
 // remove movie
-router.delete('/movie', async(req, res) => {
+router.delete(ROUTES.movie, async(req, res) => {
     if (!req.body) {
         return res.status(400).send(SERVER_RESPONSES.EMPTY_REQ_BODY);
     }
@@ -148,7 +148,7 @@ router.delete('/movie', async(req, res) => {
 });
 
 // create new movies from file
-router.post('/movies', async(req, res) => {
+router.post(ROUTES.movies, async(req, res) => {
     if(!req.files) {
         return res.status(400).send(SERVER_RESPONSES.MISSING_FILE);
     }
@@ -194,10 +194,6 @@ router.post('/movies', async(req, res) => {
 
         return res.json(result);
     } catch (error) {
-        if(error.code === 11000) {
-            return res.status(500).json(`${SERVER_RESPONSES.DUPLICATED_MOVIE}`);
-        }
-
         return res.status(500).json(error.errmsg);
     }  
 });
