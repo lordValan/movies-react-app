@@ -12,3 +12,42 @@
     padding: 0;
     list-style-type: none;
 }
+
+%button {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    padding: 5px 15px;
+    font-size: 14px;
+    line-height: 1;
+    border-radius: 2px;
+    user-select: none;
+
+    &:active,
+    &:focus {
+        outline: none;
+    }
+}
+
+%default-button {
+    @extend %button;
+
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+%primary-button {
+    @extend %button;
+
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}

@@ -1,0 +1,25 @@
+@import '../../sass/partials/vme';
+
+.removeAcceptor {
+    padding: 25px 35px;
+    box-sizing: border-box;
+    width: 500px;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    & > *:not(:last-child) {
+        margin-right: 5px;
+    }
+}
+
+.btAccept {
+    @extend %primary-button;
+}
+
+.btCancel {
+    @extend %default-button;
+}

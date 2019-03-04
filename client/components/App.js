@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 // Instruments
 import { Settings } from '../utils';
 import WebFont from 'webfontloader';
-import { getMovies, getMoviesResponseHandler, getMoviesErrorHandler } from './Methods';
+import { getMovies, getMoviesResponseHandler, getMoviesErrorHandler, removeMovie } from './Methods';
 import { ITEMS_PER_PAGE } from '..//../main/constants';
 // Styles
 import '../sass/styles.scss';
@@ -14,6 +14,7 @@ import Modal from 'react-responsive-modal';
 import MovieInfo from './MovieInfo';
 import ListInstruments from './ListInstruments';
 import CustomPagination from './Pagination';
+import RemoveAcceptor from './RemoveAcceptor';
 
 export default class App extends Component {
     constructor(props) {
@@ -35,9 +36,51 @@ export default class App extends Component {
             showEditor: false,
             showCreateEditor: false,
             showRemoveMovie: false,
-            searchString: ''
+            searchString: '',
+            errorMessage: null,
+            successMessage: null
         }
     }
+
+    // modal handlers
+
+    onOpenModal() {
+        this.setState({ modalOpen: true });
+    };
+
+    onCloseModal() {
+        this.currentMovie = null;
+
+        this.setState({ 
+            modalOpen: false,
+            showInfo: false,
+            showEditor: false,
+            showCreateEditor: false,
+            showRemoveMovie: false,
+            errorMessage: null,
+            successMessage: null
+        });
+    };
+
+    onOpenModalInfo(movie) {
+        this.currentMovie = movie;
+
+        this.setState({
+            modalOpen: true,
+            showInfo: true
+        });
+    }
+    
+    onOpenModalRemove(movie) {
+        this.currentMovie = movie;
+
+        this.setState({
+            modalOpen: true,
+            showRemoveMovie: true
+        });
+    }
+
+    // search handlers
 
     onSearchStringChangeHandler(searchValue) {
         getMovies(searchValue, this.currentSort)
@@ -52,36 +95,7 @@ export default class App extends Component {
             .catch(getMoviesErrorHandler);
     }
 
-    onOpenModal() {
-        this.setState({ modalOpen: true });
-    };
-
-    onCloseModal() {
-        this.currentMovie = null;
-
-        this.setState({ 
-            modalOpen: false,
-            showInfo: false,
-            showEditor: false,
-            showCreateEditor: false,
-            showRemoveMovie: false
-        });
-    };
-
-    onOpenModalInfo(movie) {
-        this.currentMovie = movie;
-
-        this.setState({
-            modalOpen: true,
-            showInfo: true
-        });
-    }
-
-    componentDidMount() {
-        getMovies()
-            .then(getMoviesResponseHandler.bind(this))
-            .catch(getMoviesErrorHandler);
-    }
+    // sort handlers
 
     onSortChangeHandler(newSort) {
         getMovies(this.state.searchString, newSort, this.state.currentPage)
@@ -93,6 +107,8 @@ export default class App extends Component {
             .catch(getMoviesErrorHandler);
     }
 
+    // pagination handlers
+
     onPageChangeHandler(pageNumber) {        
         getMovies(this.state.searchString, this.currentSort, pageNumber)
             .then((response) => {
@@ -100,6 +116,37 @@ export default class App extends Component {
 
                 this.setState({ currentPage: pageNumber });
             })
+            .catch(getMoviesErrorHandler);
+    }
+
+    // remove handlers
+
+    removeMovieHandler(id) {
+        removeMovie(id)
+            .then((response) => {
+                this.setState({
+                    successMessage: 'The movie is successfully removed!'
+                });
+
+                getMovies(this.state.searchString, this.currentSort, this.state.currentPage)
+                    .then((response) => {
+                        getMoviesResponseHandler.bind(this)(response);
+        
+                        this.onCloseModal();
+                    })
+                    .catch(getMoviesErrorHandler);
+            })
+            .catch((error) => {
+                /* this.setState({
+                    errorMessage: error
+                }); */
+                console.log(error.response.data);
+            });
+    }
+
+    componentDidMount() {
+        getMovies()
+            .then(getMoviesResponseHandler.bind(this))
             .catch(getMoviesErrorHandler);
     }
 
@@ -113,6 +160,7 @@ export default class App extends Component {
                 />
                 <MoviesList movies = { this.state.movies } 
                         onOpenModalInfo = { this.onOpenModalInfo.bind(this) } 
+                        onOpenModalRemove = { this.onOpenModalRemove.bind(this) }
                         searchString = { this.state.searchString }
                 />
                 <CustomPagination totalItemsCount = { this.state.fullMoviesAmount }                        
@@ -125,10 +173,15 @@ export default class App extends Component {
                         center
                         classNames = { { closeButton: 'close-modal-button' } }
                 > 
-                    { this.state.showInfo ? <MovieInfo movie = { this.currentMovie } searchString = { this.state.searchString } /> : null }
+                    { this.state.showInfo ? <MovieInfo movie = { this.currentMovie } 
+                            searchString = { this.state.searchString } /> : null }
                     { this.state.showEditor ? <p>Editor</p> : null }
                     { this.state.showCreateEditor ? <p>Create Editor</p> : null }
-                    { this.state.showRemoveMovie ? <p>Remove</p> : null }
+                    { this.state.showRemoveMovie ? <RemoveAcceptor movie = { this.currentMovie } 
+                            onAccept = { this.removeMovieHandler.bind(this) }
+                            onCancel = { this.onCloseModal.bind(this) }
+                            error = { this.state.errorMessage }
+                            success = { this.state.successMessage } />: null }
                 </Modal>                
             </Fragment>         
         )

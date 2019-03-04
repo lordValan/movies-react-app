@@ -62,7 +62,9 @@ class MoviesList extends Component {
                                 <button className = { styles.movieInstrumentsBt }>
                                     {<MdEdit />}
                                 </button>
-                                <button className = { styles.movieInstrumentsBt }>
+                                <button className = { styles.movieInstrumentsBt }
+                                        onClick = { () => this.props.onOpenModalRemove(movie) }
+                                >
                                     {<MdDelete />}
                                 </button>
                             </div>                         
@@ -80,7 +82,9 @@ class MoviesList extends Component {
 
 MoviesList.propTypes = {
     movies: PropTypes.array.isRequired,
-    searchString: PropTypes.string
+    searchString: PropTypes.string,
+    onOpenModalInfo: PropTypes.func.isRequired,
+    onOpenModalRemove: PropTypes.func.isRequired
 }
 
 export default MoviesList;

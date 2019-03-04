@@ -14,8 +14,8 @@ const CustomPagination = (props) => {
                 pageClassName = { styles.pageItem } 
                 nextPageText = { '➡️' }
                 prevPageText = { '⬅️' }
-                firstPageText = ''
-                lastPageText = ''
+                firstPageText = '↖️'
+                lastPageText = '↗️'
                 disabledClass = { styles.disabled }
                 activeClass = { styles.active }
         />
