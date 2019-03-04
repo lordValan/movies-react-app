@@ -8,7 +8,8 @@
     "start:client": "webpack --config ./webpack.config.js --mode development --watch",
     "start:development": "concurrently \"npm run start:server\" \"npm run start:client\"",
     "start": "npm run start:development",
-    "build": "webpack --config ./webpack.config.js --mode production"
+    "build": "webpack --config ./webpack.config.js --mode production",
+    "demonstrate": "concurrently \"npm run build\" \"npm run start:server\""
   },
   "repository": {
     "type": "git",
