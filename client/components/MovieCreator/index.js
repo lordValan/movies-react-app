@@ -92,7 +92,7 @@ class MovieCreator extends Component {
             <section className = { styles.movieCreator } >
                 <form onSubmit = { this.onFormSubmitHandler.bind(this) } >
                     <section className = { styles.formSection } >
-                        <label className = { styles.formLabel } >Name</label>
+                        <label className = { styles.formLabel }>Name</label>
                         <input type = 'text' 
                             className = { styles.formInput } 
                             value = { this.state.movie.name } 
@@ -133,7 +133,7 @@ class MovieCreator extends Component {
                         { 
                             this.state.showConfirm ? 
                                 <Conformator onAccept = { this.props.onSend.bind(null, this.state.movie) }
-                                        onCancel = { this.onCancelHandler }                                        
+                                        onCancel = { this.onCancelHandler.bind(this) }                                        
                                 /> 
                                 : 
                                 null 
