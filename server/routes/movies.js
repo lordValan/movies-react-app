@@ -88,19 +88,17 @@ router.post(ROUTES.movie, async(req, res) => {
         return res.status(400).send(SERVER_RESPONSES.MISSING_MOVIE_ACTORS);
     }
 
-    const model = new MovieModel(req.body);
-
-    try {
-        const createResult = await model.save();
-
-        if (!createResult || createResult.length === 0) {
-            return res.status(500).send(doc)
+    MovieModel.create(req.body, function (err, small) {
+        if (err) {
+            if(err.errors.name.kind === 'unique') {
+                return res.status(500).send(`"${req.body.name}" - ${SERVER_RESPONSES.DUPLICATED_MOVIE}`);
+            } else {
+                return res.status(500).send(err.errors.name.message);
+            }
         }
-
-        res.status(201).send(createResult);
-    } catch (error) {
-        return res.status(500).json(error.errmsg);
-    }
+        
+        return res.status(201).send('Movie is created successfully!');
+    })
 });
 
 // update movie
@@ -120,7 +118,7 @@ router.put(ROUTES.movie, async(req, res) => {
             new: true
         });
 
-        res.status(201).send(updateResult);
+        return res.status(201).send(updateResult);
     } catch (error) {
         return res.status(500).json(error.errmsg);
     }
@@ -141,7 +139,7 @@ router.delete(ROUTES.movie, async(req, res) => {
             _id: req.body.id
         });
 
-        res.status(201).send(removeResult);
+        return res.status(201).send(removeResult);
     } catch (error) {
         return res.status(500).json(error);
     }

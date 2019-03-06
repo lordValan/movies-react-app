@@ -33,6 +33,10 @@ class MoviesImporter extends Component {
         this.setState({ file: event.target.files[0] });
     }
 
+    onCancelHandler() {
+        this.setState( { showConfirm: false } );
+    }
+
     render() {
         return (
             <section className = { styles.moviesImporter }>
@@ -57,8 +61,8 @@ class MoviesImporter extends Component {
                     <section className = { `${styles.formSection} ${styles.formSubmitSection}` }>
                         { 
                             this.state.showConfirm ? 
-                                <Conformator onAccept = { () => { this.props.onSend(this.state.file) } }
-                                        onCancel = { () => this.setState( { showConfirm: false } ) }                                        
+                                <Conformator onAccept = { this.props.onSend.bind(null, this.state.file) }
+                                        onCancel = { this.onCancelHandler.bind(this) }                                        
                                 /> 
                                 : 
                                 null 

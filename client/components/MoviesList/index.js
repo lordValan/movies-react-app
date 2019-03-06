@@ -55,17 +55,17 @@ class MoviesList extends Component {
                             <span className = { styles.movieYear }>{ movie.year }</span> 
                             <div className = { styles.movieInstruments }>
                                 <button className = { styles.movieInstrumentsBt } 
-                                        onClick = { () => this.props.onOpenModalInfo(movie) }
+                                        onClick = { this.props.onOpenModalInfo.bind(null, movie) }
                                 >
                                     {<MdInfo />}
                                 </button>
                                 <button className = { styles.movieInstrumentsBt }
-                                        onClick = { () => this.props.onOpenModalEdit(movie) }
+                                        onClick = { this.props.onOpenModalEdit.bind(null, movie) }
                                 >
                                     {<MdEdit />}
                                 </button>
                                 <button className = { styles.movieInstrumentsBt }
-                                        onClick = { () => this.props.onOpenModalRemove(movie) }
+                                        onClick = { this.props.onOpenModalRemove.bind(null, movie) }
                                 >
                                     {<MdDelete />}
                                 </button>

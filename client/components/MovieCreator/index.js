@@ -81,6 +81,10 @@ class MovieCreator extends Component {
         return index ? index : 0;
     }
 
+    onCancelHandler() {
+        this.setState( { showConfirm: false } );
+    }
+
     render() {
         let defaultOption = options[this.getFormatPosition(this.state.movie.format)];
 
@@ -88,7 +92,7 @@ class MovieCreator extends Component {
             <section className = { styles.movieCreator } >
                 <form onSubmit = { this.onFormSubmitHandler.bind(this) } >
                     <section className = { styles.formSection } >
-                        <label className = { styles.formLabel } >Name</label>
+                        <label className = { styles.formLabel }>Name</label>
                         <input type = 'text' 
                             className = { styles.formInput } 
                             value = { this.state.movie.name } 
@@ -128,8 +132,8 @@ class MovieCreator extends Component {
                     <section className = { `${styles.formSection} ${styles.formSubmitSection}` } >
                         { 
                             this.state.showConfirm ? 
-                                <Conformator onAccept = { () => this.props.onSend(this.state.movie) }
-                                        onCancel = { () => this.setState( { showConfirm: false } ) }                                        
+                                <Conformator onAccept = { this.props.onSend.bind(null, this.state.movie) }
+                                        onCancel = { this.onCancelHandler.bind(this) }                                        
                                 /> 
                                 : 
                                 null 
