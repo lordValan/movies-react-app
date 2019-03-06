@@ -62,7 +62,7 @@ class MoviesImporter extends Component {
                         { 
                             this.state.showConfirm ? 
                                 <Conformator onAccept = { this.props.onSend.bind(null, this.state.file) }
-                                        onCancel = { this.onCancelHandler }                                        
+                                        onCancel = { this.onCancelHandler.bind(this) }                                        
                                 /> 
                                 : 
                                 null 
