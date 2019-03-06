@@ -1,5 +1,15 @@
+import sanitizeHtml from 'sanitize-html';
+
 const pickFilter = (str, startIndex, endIndex, className = 'highlight') => {
-    return `${str.slice(0, startIndex)}<span class='${className}'>${str.slice(startIndex, endIndex)}</span>${str.slice(endIndex)}`;
+    const rawHtml = `${str.slice(0, startIndex)}<span class='${className}'>${str.slice(startIndex, endIndex)}</span>${str.slice(endIndex)}`,
+            cleanHtml = sanitizeHtml(rawHtml, {
+                allowedTags: [ 'span' ],
+                    allowedAttributes: {
+                        'span': [ 'class' ]
+                    }
+            });
+
+    return cleanHtml;
 }
 
 const setSearchHighlighted = (searchStr, targetStr) => {
