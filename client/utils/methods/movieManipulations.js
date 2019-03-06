@@ -14,15 +14,6 @@ function getMovies(s = '', sort = 'default', page = 1) {
     });
 };
 
-function getMoviesResponseHandler(response) {
-    this.setState({ 
-        movies: response.data.movies,
-        shownMoviesAmount: response.data.shownAmount,
-        maxNumPages: response.data.maxNumPages,
-        fullMoviesAmount: response.data.fullAmount
-    });
-};
-
 function getMoviesErrorHandler(error) {
     console.log(error);
 };
@@ -76,6 +67,6 @@ function importMovies(file) {
 }
 
 export {
-    getMovies, getMoviesResponseHandler, getMoviesErrorHandler, removeMovie, 
+    getMovies, getMoviesErrorHandler, removeMovie, 
     updateMovie, createMovie, importMovies
 }

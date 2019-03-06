@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 // Instruments
 import { Settings } from '../utils';
 import WebFont from 'webfontloader';
-import { getMovies, getMoviesResponseHandler, getMoviesErrorHandler, 
+import { getMovies, getMoviesErrorHandler, 
             removeMovie, updateMovie, createMovie, importMovies } from '../utils/methods';
 import { ITEMS_PER_PAGE } from '..//../main/constants';
 // Styles
@@ -45,6 +45,15 @@ export default class App extends Component {
             successMessage: null
         }
     }
+
+    getMoviesResponseHandler(response) {
+        this.setState({ 
+            movies: response.data.movies,
+            shownMoviesAmount: response.data.shownAmount,
+            maxNumPages: response.data.maxNumPages,
+            fullMoviesAmount: response.data.fullAmount
+        });
+    };
 
     // modal handlers
 
@@ -113,7 +122,7 @@ export default class App extends Component {
     onSearchStringChangeHandler(searchValue) {
         getMovies(searchValue, this.currentSort)
             .then((response) => {
-                getMoviesResponseHandler.bind(this)(response);                
+                this.getMoviesResponseHandler(response);                
 
                 this.setState({ 
                     currentPage: 1,
@@ -128,7 +137,7 @@ export default class App extends Component {
     onSortChangeHandler(newSort) {
         getMovies(this.state.searchString, newSort, this.state.currentPage)
             .then((response) => {
-                getMoviesResponseHandler.bind(this)(response);
+                this.getMoviesResponseHandler(response);
 
                 this.currentSort = newSort;
             })
@@ -140,7 +149,7 @@ export default class App extends Component {
     onPageChangeHandler(pageNumber) {        
         getMovies(this.state.searchString, this.currentSort, pageNumber)
             .then((response) => {
-                getMoviesResponseHandler.bind(this)(response);
+                this.getMoviesResponseHandler(response);
 
                 this.setState({ currentPage: pageNumber });
             })
@@ -224,7 +233,7 @@ export default class App extends Component {
     reFetchMovies() {
         getMovies(this.state.searchString, this.currentSort, this.state.currentPage)
             .then((response) => {
-                getMoviesResponseHandler.bind(this)(response);
+                this.getMoviesResponseHandler(response);
 
                 this.onCloseModal();
             })
@@ -233,7 +242,7 @@ export default class App extends Component {
 
     componentDidMount() {
         getMovies()
-            .then(getMoviesResponseHandler.bind(this))
+            .then(this.getMoviesResponseHandler.bind(this))
             .catch(getMoviesErrorHandler);
     }
 

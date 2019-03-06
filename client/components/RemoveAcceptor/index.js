@@ -16,7 +16,7 @@ const RemoveAcceptor = (props) => {
                     Cancel
                 </button>
                 <button className = { styles.btAccept }
-                        onClick = { () => props.onAccept(props.movie._id) }
+                        onClick = { props.onAccept.bind(null, props.movie._id) }
                 >
                     Yes
                 </button>
