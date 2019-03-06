@@ -40,6 +40,7 @@
     "react-responsive-modal": "^3.6.0",
     "react-select": "^2.4.1",
     "react-tagsinput": "^3.19.0",
+    "sanitize-html": "^1.20.0",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
